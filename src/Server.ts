@@ -21,6 +21,7 @@ const rootDir: string = Path.resolve(__dirname);
             path: "/api-docs"
         }
     ],
+    httpPort: process.env.PORT || 4000,
     rootDir,
     acceptMimes: ['application/json']
 })
