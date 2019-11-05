@@ -1,0 +1,5 @@
+node_modules/**
+test_coverage/**
+coverage/**
+build/**
+src/tests/**

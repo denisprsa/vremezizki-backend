@@ -1,0 +1,42 @@
+{
+    "name": "api-vremezizki",
+    "version": "1.0.0",
+    "description": "backend vremezizki",
+    "main": "index.js",
+    "dependencies": {
+        "@tsed/common": "5.33.0",
+        "@tsed/core": "5.33.0",
+        "@tsed/di": "5.33.0",
+        "@tsed/swagger": "^5.33.0",
+        "@types/swagger-schema-official": "^2.0.19",
+        "body-parser": "^1.19.0",
+        "compression": "^1.7.4",
+        "cookie-parser": "^1.4.4",
+        "express": "^4.17.1",
+        "method-override": "^3.0.0",
+        "mysql": "^2.17.1"
+    },
+    "devDependencies": {
+        "@types/compression": "^1.0.1",
+        "@types/cookie-parser": "^1.4.2",
+        "@types/express": "^4.17.2",
+        "@types/method-override": "0.0.31",
+        "@types/mysql": "^2.15.7",
+        "@types/node": "^12.12.5",
+        "nodemon": "^1.19.4",
+        "ts-node": "^8.4.1",
+        "typescript": "^3.7.2"
+    },
+    "scripts": {
+        "build": "npm run tsc",
+        "coverage": "npm run test-cov && npm run test-remap",
+        "postinstall": "npm run build",
+        "tslint": "tslint ./*.ts ./lib/*.ts",
+        "test": "mocha --reporter spec --check-leaks --bail test/",
+        "tsc": "tsc --project tsconfig.json",
+        "tsc:w": "tsc -w",
+        "start": "nodemon --watch '**/*.ts' --ignore 'node_modules/**/*' --exec ts-node src/index.ts"
+    },
+    "author": "denisp",
+    "license": "UNLICENSED"
+}
