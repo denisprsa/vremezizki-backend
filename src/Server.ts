@@ -22,6 +22,7 @@ const rootDir: string = Path.resolve(__dirname);
         }
     ],
     httpPort: process.env.PORT || 4000,
+    httpsPort: false,
     rootDir,
     acceptMimes: ['application/json']
 })
@@ -42,4 +43,6 @@ export class Server extends ServerLoader {
             extended: true
         }));
     }
+
+
 }
