@@ -1,13 +1,16 @@
 import {GlobalAcceptMimesMiddleware, ServerLoader, ServerSettings} from '@tsed/common';
 import "@tsed/swagger"; 
+import WebSocket, { Server as WSServer } from 'ws'; 
 
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import compress from 'compression';
 import methodOverride from 'method-override';
 import * as Path from 'path';
+import DependencyService from './services/DependencyService';
 
 const rootDir: string = Path.resolve(__dirname);
+const dependencyService: DependencyService = DependencyService.createInstance();
 
 @ServerSettings({
     mount: {
@@ -30,9 +33,11 @@ export class Server extends ServerLoader {
 
     /**
      * This method let you configure the express middleware required by your application to works.
-     * @returns {Server}
+     *
      */
-    public $beforeRoutesInit(): void | Promise<any> {
+    public async $beforeRoutesInit(): Promise<any> {
+        await dependencyService.mySqlDatabase.initialize();
+
         this
         .use(GlobalAcceptMimesMiddleware)
         .use(cookieParser())
@@ -44,5 +49,22 @@ export class Server extends ServerLoader {
         }));
     }
 
+    /**
+     * This function is fired when server is up and running
+     *
+     */
+    public $onReady(): void | Promise<any> {
+        const wss = new WSServer({
+            server: this.httpServer
+        });
 
+        wss.on('connection',  (ws: WebSocket) => {
+            let id = Math.random().toString();
+            dependencyService.connectedWebSockets.set(id, ws);
+
+            ws.on('close', () => {
+                dependencyService.connectedWebSockets.delete(id);
+            });
+        });
+    }
 }
