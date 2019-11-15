@@ -1,4 +1,4 @@
-import {Controller, Res, Next, Post, BodyParams, Get, QueryParams} from '@tsed/common';
+import {Controller, Res, Next, Post, BodyParams, Get, QueryParams, Required} from '@tsed/common';
 import * as Express from 'express';
 import { Description, Summary, Returns, Name, ReturnsArray } from '@tsed/swagger';
 import DependencyService from './../services/DependencyService';
@@ -34,8 +34,8 @@ export class WeatherController {
     async getWeatherStationData(
         @Res() response: Express.Response,
         @Next() next: Express.NextFunction,
-        @QueryParams('from') from: string,
-        @QueryParams('to') to: string
+        @Required() @QueryParams('from') from: string,
+        @Required() @QueryParams('to') to: string
     ): Promise<void> {
 
         let data = await this.dependencies.weatherService.getWeatherStationRecords(from, to);
