@@ -1,6 +1,6 @@
-import {Controller, Get, Req, Res, Next, Post, BodyParams} from '@tsed/common';
+import {Controller, Res, Next, Post, BodyParams, Get, QueryParams} from '@tsed/common';
 import * as Express from 'express';
-import { Description, Summary, Returns, Name } from '@tsed/swagger';
+import { Description, Summary, Returns, Name, ReturnsArray } from '@tsed/swagger';
 import DependencyService from './../services/DependencyService';
 import { WeatherStationDataPayloadModel } from '../swagger-models/WeatherStationDataPayloadModel';
 import { WeatherStationData } from '../interfaces/WeatherStationData';
@@ -11,16 +11,34 @@ export class WeatherController {
 
     constructor(private dependencies: DependencyService) {}
     
-    @Post('/weather-station')
-    @Description('Returns weather data.')
-    @Summary('Returns weather data.')
+    @Post('/weather-station/measurements')
+    @Description('Add weather station measurement data.')
+    @Summary('Add weather station measurement data.')
     @Returns(200, { description: 'Success' })
-    async getWeatherData(
-        @Req() request: Express.Request,
+    async addWeatherStationData(
         @Res() response: Express.Response,
         @Next() next: Express.NextFunction,
         @BodyParams({ useType: WeatherStationDataPayloadModel }) body: WeatherStationData
     ): Promise<void> {
-        await this.dependencies.weatherService.createWeatherStationRecord(body);
+        try {
+            await this.dependencies.weatherService.createWeatherStationRecord(body);
+            response.end();
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    @Get('/weather-station/measurements')
+    @Description('Returns weather station measurements.')
+    @Summary('Returns weather station measurements.')
+    async getWeatherStationData(
+        @Res() response: Express.Response,
+        @Next() next: Express.NextFunction,
+        @QueryParams('from') from: string,
+        @QueryParams('to') to: string
+    ): Promise<void> {
+
+        let data = await this.dependencies.weatherService.getWeatherStationRecords(from, to);
+        response.json(data);
     }
 }

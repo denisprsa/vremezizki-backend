@@ -1,7 +1,8 @@
-import { createConnection, Connection } from 'mysql';
+import { createConnection, Connection, Query } from 'mysql';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { WeatherStationData } from '../interfaces/WeatherStationData';
+import { resolve } from 'dns';
 
 export default class MySqlDatabase {
     private connection: Connection;
@@ -51,5 +52,19 @@ export default class MySqlDatabase {
                 resolve();
             });
         });
+    }
+
+    getWeatherStationRecords(from: string | undefined, to: string | undefined): Promise<any> {
+        const sql = 'SELECT * FROM podatkii';
+
+        return new Promise((resolve, reject) => {
+            this.connection.query(sql, (err, result) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve(result);
+            });
+        })
     }
 }

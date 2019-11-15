@@ -18,6 +18,7 @@ const dependencyService: DependencyService = DependencyService.createInstance();
     },
     componentsScan: [
         `${rootDir}/services/**/**.ts`,
+        `${rootDir}/middlewares/**/**.ts`
     ],
     swagger: [
         {
