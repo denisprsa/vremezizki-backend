@@ -1,5 +1,6 @@
 import ValidatorService from '../services/ValidatorService';
 import { fail, deepEqual } from 'assert';
+import { BadRequest } from 'ts-httpexceptions';
 
 const validatorService = new ValidatorService();
 const payload = {
@@ -20,7 +21,7 @@ describe('Validator service', () => {
             validatorService.validateWeatherStationData(payload);
             fail('Should not pass');
         } catch (e) {
-            deepEqual(e, new Error('Invalid date time format.'));
+            deepEqual(e, new BadRequest('Invalid date time format. Should be "YYYY-MM-DD HH:mm:ss".'));
         }
     });
 

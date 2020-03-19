@@ -25,7 +25,7 @@ const dependencyService: DependencyService = DependencyService.createInstance();
             path: "/api-docs"
         }
     ],
-    httpPort: process.env.PORT || 4000,
+    httpPort: process.env.PORT || 3009,
     httpsPort: false,
     rootDir,
     acceptMimes: ['application/json']

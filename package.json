@@ -73,7 +73,7 @@
         "build": "npm run tsc",
         "coverage": "npm run test-cov && npm run test-remap",
         "tslint": "tslint ./*.ts ./lib/*.ts",
-        "test": "export TS_NODE_TRANSPILE_ONLY=1 || set TS_NODE_TRANSPILE_ONLY=1 && nyc --all --report-dir coverage --reporter=html --reporter=json --reporter=cobertura mocha tests/**/*.spec.ts",
+        "test": "export TS_NODE_TRANSPILE_ONLY=1 || set TS_NODE_TRANSPILE_ONLY=1 && nyc --all --report-dir coverage --reporter=html --reporter=json --reporter=cobertura mocha src/test/**/*.spec.js",
         "tsc": "tsc --project tsconfig.json",
         "tsc:w": "tsc -w",
         "start": "nodemon --watch '**/*.ts' --ignore 'node_modules/**/*' --exec ts-node src/index.ts"
