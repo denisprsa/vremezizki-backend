@@ -54,9 +54,9 @@ export default class MySqlDatabase {
         });
     }
 
-    getWeatherStationRecords(from: string | undefined, to: string | undefined): Promise<any> {
+    getWeatherStationRecords(from: string, to: string): Promise<any> {
         const sql = 'SELECT * FROM podatkii WHERE DATUM > ? AND DATUM < ?';
-        const values = []
+        const values = [from, to];
 
         return new Promise((resolve, reject) => {
             this.connection.query(sql, values, (err, result) => {
@@ -66,6 +66,6 @@ export default class MySqlDatabase {
 
                 resolve(result);
             });
-        })
+        });
     }
 }
