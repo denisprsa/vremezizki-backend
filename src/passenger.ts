@@ -4,7 +4,7 @@ import { createServer } from 'http';
 const stoppedResult = execSync("node_modules/forever/bin/forever stopall");
 console.log(`result: ${stoppedResult.toString()}`);
 
-exec("node_modules/forever/bin/forever start index.js", (error, stdout, stderr) => {
+exec("node_modules/forever/bin/forever start build/index.js", (error, stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
         return;
