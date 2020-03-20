@@ -26,8 +26,13 @@ export default class WeatherService {
             throw new ServiceError('Time difference cannot be larger than one week.', 400, 'differenceBetweenTimeTooLarge');
         }
 
-        const data = await this.dependencies.mySqlDatabase.getWeatherStationRecords(formattedFrom, formattedTo);
+        const measurements = await this.dependencies.mySqlDatabase.getWeatherStationRecords(formattedFrom, formattedTo);
 
-        return data;
+        return measurements.map((value: WeatherStationData) => {
+            return {
+                ...value,
+                datetime: new Date(value.datetime).toISOString()
+            };
+        })
     }
 }

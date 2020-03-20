@@ -54,8 +54,20 @@ export default class MySqlDatabase {
         });
     }
 
-    getWeatherStationRecords(from: string, to: string): Promise<any> {
-        const sql = 'SELECT * FROM podatkii WHERE DATUM > ? AND DATUM < ?';
+    getWeatherStationRecords(from: string, to: string): Promise<WeatherStationData[]> {
+        const sql = `
+            SELECT TEMPERATURA AS temperature,
+                ROSISCE AS dewpoint,
+                VLAGA AS humidity,
+                VETERN AS windNormal,
+                VETERSU AS windGusts,
+                VETERSM AS windDirection,
+                TLAK AS pressure,
+                PADAVINE AS rain,
+                DATUM AS datetime
+            FROM podatkii
+            WHERE DATUM > ? AND DATUM < ?
+        `;
         const values = [from, to];
 
         return new Promise((resolve, reject) => {

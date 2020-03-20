@@ -2,7 +2,7 @@ import {Controller, Res, Next, Post, BodyParams, Get, QueryParams, Required} fro
 import * as Express from 'express';
 import { Description, Summary, Returns, Name, ReturnsArray } from '@tsed/swagger';
 import DependencyService from './../services/DependencyService';
-import { WeatherStationDataPayloadModel } from '../swagger-models/WeatherStationDataPayloadModel';
+import { WeatherStationDataModel } from '../swagger-models/WeatherStationDataModel';
 import { WeatherStationData } from '../interfaces/WeatherStationData';
 
 @Name('Weather station')
@@ -18,7 +18,7 @@ export class WeatherController {
     async addWeatherStationData(
         @Res() response: Express.Response,
         @Next() next: Express.NextFunction,
-        @BodyParams({ useType: WeatherStationDataPayloadModel }) body: WeatherStationData
+        @BodyParams({ useType: WeatherStationDataModel }) body: WeatherStationData
     ): Promise<void> {
         try {
             await this.dependencies.weatherService.createWeatherStationRecord(body);
@@ -31,6 +31,7 @@ export class WeatherController {
     @Get('/weather-station/measurements')
     @Description('Returns weather station measurements.')
     @Summary('Returns weather station measurements.')
+    @ReturnsArray(200, { description: 'Success', type: WeatherStationDataModel })
     async getWeatherStationData(
         @Res() response: Express.Response,
         @Next() next: Express.NextFunction,
@@ -39,6 +40,7 @@ export class WeatherController {
     ): Promise<void> {
 
         let data = await this.dependencies.weatherService.getWeatherStationRecords(from, to);
+        response.set('Access-Control-Allow-Origin', '*');
         response.json(data);
     }
 }

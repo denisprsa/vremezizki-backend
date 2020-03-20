@@ -2,7 +2,7 @@ import { WeatherStationData } from '../interfaces/WeatherStationData';
 import { Required, Property } from '@tsed/common';
 
 
-export class WeatherStationDataPayloadModel implements WeatherStationData {
+export class WeatherStationDataModel implements WeatherStationData {
     @Required()
     @Property()
     public temperature: number;
