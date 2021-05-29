@@ -18,7 +18,7 @@
         "moment": "^2.24.0",
         "mysql": "^2.17.1",
         "ts-httpexceptions": "^4.1.0",
-        "ws": "^7.2.0"
+        "ws": "^7.4.6"
     },
     "devDependencies": {
         "@types/compression": "^1.0.1",
