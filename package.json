@@ -34,7 +34,7 @@
         "@typescript-eslint/parser": "^2.6.1",
         "eslint": "^6.6.0",
         "eslint-plugin-notice": "^0.8.9",
-        "mocha": "^6.2.2",
+        "mocha": "^10.2.0",
         "mockdate": "^2.0.5",
         "nodemon": "^1.19.4",
         "nyc": "^14.1.1",
